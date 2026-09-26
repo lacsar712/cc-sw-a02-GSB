@@ -26,10 +26,14 @@ def claim_one(conn):
     ).fetchone()
     if not row:
         return None
-    verdict, reason = judge(row["nominal_nm"], row["measured_nm"])
+    # 领走那一刻记下现行档：判定与后续展示都吃这个记下的档，之后的改档不影响本单
+    tolerance_nm = conn.execute(
+        "SELECT tolerance_nm FROM tolerance_state WHERE id = 1"
+    ).fetchone()["tolerance_nm"]
+    verdict, reason = judge(row["nominal_nm"], row["measured_nm"], tolerance_nm)
     conn.execute(
-        "UPDATE jobs SET status='done', verdict=%s, reason=%s WHERE id=%s",
-        (verdict, reason, row["id"]),
+        "UPDATE jobs SET status='done', verdict=%s, reason=%s, tolerance_nm=%s WHERE id=%s",
+        (verdict, reason, tolerance_nm, row["id"]),
     )
     conn.commit()
     return row["id"]

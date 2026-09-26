@@ -55,7 +55,7 @@ onUnmounted(() => clearInterval(timer))
     <table border="1" cellpadding="6" style="border-collapse:collapse; width:100%;">
       <thead>
         <tr>
-          <th>编号</th><th>灯种</th><th>标称</th><th>实测</th><th>状态</th><th>结论</th><th>理由</th>
+          <th>编号</th><th>灯种</th><th>标称</th><th>实测</th><th>允差档</th><th>状态</th><th>结论</th><th>理由</th>
         </tr>
       </thead>
       <tbody>
@@ -69,6 +69,7 @@ onUnmounted(() => clearInterval(timer))
           <td>{{ j.lamp }}</td>
           <td>{{ j.nominal_nm }}</td>
           <td>{{ j.measured_nm }}</td>
+          <td>{{ j.tolerance_nm ?? '—' }}</td>
           <td>{{ j.status }}</td>
           <td>{{ j.verdict }}</td>
           <td>{{ j.reason }}</td>
