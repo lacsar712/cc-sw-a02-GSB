@@ -36,6 +36,7 @@ watch(() => route.params.id, load)
       <p>状态：{{ job.status }}</p>
       <p>结论：{{ job.verdict }}</p>
       <p>理由：{{ job.reason }}</p>
+      <p v-if="job.tolerance_nm != null">判定档位 nm：{{ job.tolerance_nm }}</p>
     </section>
   </div>
 </template>
